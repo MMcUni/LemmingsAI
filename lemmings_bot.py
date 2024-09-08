@@ -26,27 +26,27 @@ lemmings, goal, detected_frame = detect_lemmings_and_goal(gray_frame, lemming_te
 cv2.imshow("Detected Lemmings and Goals", detected_frame)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
-
-# Function to test clicking the digger button and a lemming
-def test_click_digger_on_lemming(lemmings):
+def predictive_click_lemming(lemmings, region, movement_speed=2):
     if lemmings:
-        # Move to the "digger" button position and click
-        pyautogui.moveTo(button_coords["digger"])
-        time.sleep(1)  # Wait for 1 second to visually verify the mouse position
-        pyautogui.click()
+        # Click the digger button
+        pyautogui.click(button_coords["digger"])
         
-        # Delay to ensure the game registers the button click
-        time.sleep(0.5)
+        # Get the lemming's position
+        lemming_x, lemming_y = lemmings[0]
         
-        # Click on the first detected lemming's position
-        lemming_position = lemmings[0]
-        pyautogui.moveTo(lemming_position)
-        time.sleep(1)  # Wait for 1 second to visually verify the mouse position
-        pyautogui.click()
-
-        print(f"Clicked 'digger' button and then clicked on lemming at {lemming_position}.")
+        # Predict the new position based on assumed movement
+        predicted_x = lemming_x + movement_speed
+        
+        # Adjust coordinates based on the capture region
+        screen_x = region[0] + predicted_x
+        screen_y = region[1] + lemming_y
+        
+        # Click on the predicted position
+        pyautogui.click(screen_x, screen_y)
+        
+        print(f"Clicked 'digger' button and then clicked on predicted lemming position: ({screen_x}, {screen_y}).")
     else:
         print("No lemmings detected.")
 
-# Run the test
-test_click_digger_on_lemming(lemmings)
+# Use this function instead of test_click_digger_on_lemming
+predictive_click_lemming(lemmings, region)
