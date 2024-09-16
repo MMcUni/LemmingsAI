@@ -1,0 +1,55 @@
+# Machine Learning Approach for Lemmings AI
+
+## 1. Reinforcement Learning (RL)
+
+Reinforcement Learning is well-suited for Lemmings due to the following reasons:
+
+- **Sequential Decision Making**: The game involves making a series of decisions over time, which aligns well with RL's framework.
+- **Delayed Rewards**: The success of actions may not be immediately apparent, but contributes to the overall level completion.
+- **Large State Space**: The game has many possible states (Lemmings' positions, skills used, terrain state).
+- **Discrete Action Space**: The set of possible actions (assigning skills to Lemmings) is discrete and limited.
+
+### Specific RL Approach: Deep Q-Network (DQN)
+
+A Deep Q-Network could be particularly effective:
+
+- It can handle the complex state representations of the Lemmings world.
+- It can learn to predict the value of actions in different states.
+- It's capable of learning from pixel data, which could be useful for processing the game screen.
+
+## 2. Evolutionary Algorithms
+
+While RL would be the primary approach, some concepts from evolutionary algorithms could be beneficial:
+
+- **Population-based Learning**: Maintain a population of strategies and evolve them over time.
+- **Crossover and Mutation**: Combine successful strategies and introduce random variations to explore new approaches.
+
+## Implementation Considerations
+
+1. **State Representation**: 
+   - Encode the game state, including Lemmings' positions, skills available, terrain layout, etc.
+   - Consider using a CNN to process the game screen directly.
+
+2. **Action Space**: 
+   - Define actions as (skill, lemming_index) pairs.
+   - Include a "do nothing" action to allow for strategic waiting.
+
+3. **Reward Function**:
+   - Positive reward for saving Lemmings and completing levels.
+   - Small negative rewards for time passing to encourage efficiency.
+   - Larger negative rewards for Lemmings dying.
+
+4. **Learning Process**:
+   - Start with simpler levels and gradually increase difficulty.
+   - Use curriculum learning to build up the AI's capabilities.
+
+5. **Exploration vs Exploitation**:
+   - Implement an epsilon-greedy strategy or more sophisticated exploration methods to balance trying new strategies with exploiting known good ones.
+
+6. **Transfer Learning**:
+   - Try to transfer knowledge between similar levels or level types.
+
+7. **Meta-Learning**:
+   - Implement a higher-level system that learns general strategies applicable across different level designs.
+
+By combining these approaches, you can create an AI system that learns to play Lemmings in a way that mimics human learning - starting with basic strategies and gradually developing more sophisticated approaches to tackle increasingly complex levels.

@@ -1,22 +1,33 @@
+# ai_logic.py
+
 def rule_based_ai(lemmings, goal):
-    """Simple rule-based AI logic to decide actions."""
     actions = []
-    for lemming in lemmings:
+    for i, lemming in enumerate(lemmings):
         x, y = lemming
         
-        # Example rules:
-        if y < 100:  # Close to the top of the screen (adjust based on game logic)
-            actions.append(("builder", (x, y)))
-        elif x < 100:  # Close to the left edge (adjust based on game logic)
+        # Example rules (you should expand and refine these based on game mechanics):
+        if goal and abs(x - goal[0]) < 50:  # Close to the goal
+            actions.append(("digger", (x, y)))
+        elif y > 300:  # Too low, needs to climb
             actions.append(("climber", (x, y)))
-        elif close_to_trap(x, y):  # Example function to detect proximity to a trap (needs implementation)
+        elif x < 100:  # Too far left, build a bridge
+            actions.append(("builder", (x, y)))
+        elif 100 < x < 200 and i % 10 == 0:  # Create some blockers, but less frequently
             actions.append(("blocker", (x, y)))
+        elif 200 < x < 300 and i % 15 == 0:  # Create some bashers, but less frequently
+            actions.append(("basher", (x, y)))
         else:
-            actions.append(("walker", (x, y)))  # Default action
-
+            # Default to walker - no action needed
+            actions.append(("walker", (x, y)))
+    
     return actions
 
-def close_to_trap(x, y):
-    """Placeholder function to check if a lemming is close to a trap. Needs implementation."""
-    # Implement actual logic to detect traps based on game state
-    return False
+def detect_obstacles(frame):
+    # Implement obstacle detection logic here
+    # This could involve edge detection, color thresholding, etc.
+    pass
+
+def analyze_terrain(frame):
+    # Implement terrain analysis logic here
+    # This could involve identifying slopes, gaps, etc.
+    pass
